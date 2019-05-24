@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const mongoose = require('mongoose');
 const VivaReal = require('./viva-real');
-
+const Email = require('./email');
 
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -21,8 +21,7 @@ async function start() {
     vivaReal.findAll()
         .then(properties => properties.news())
         .then(properties => properties.save())
-        .then(properties => console.log(properties.length, 'novos imóveis salvos'))
-        //.then(process.exit)
+        .then(properties => new Email(properties).send())
         .catch(console.error)
         .then(process.exit)
 }

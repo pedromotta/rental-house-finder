@@ -1,3 +1,5 @@
+const Handlebars = require('handlebars')
+const fs = require('fs')
 const Property = require('./property')
 const PropertiesModel = require('./properties-model')
 
@@ -41,7 +43,16 @@ class Properties {
 
     async save() {
         const dbProperties = await PropertiesModel.insertMany(this.properties)
+        console.log(dbProperties.length, 'novos imóveis salvos')
         return Properties.fromDb(this.provider, dbProperties)
+    }
+
+    html() {
+        const html = fs.readFileSync('template-email.html', 'utf-8')
+        const template = Handlebars.compile(html)
+        return template({
+            properties: this.properties
+        })
     }
 
     append(properties) {
