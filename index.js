@@ -1,7 +1,10 @@
-const VivaReal = require('./viva-real');
-const mongoose = require('mongoose');
+require('dotenv').config()
 
-mongoose.connect('mongodb://localhost/test', {
+const mongoose = require('mongoose');
+const VivaReal = require('./viva-real');
+
+
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useCreateIndex: true
 });
