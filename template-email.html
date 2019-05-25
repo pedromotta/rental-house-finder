@@ -1,9 +1,16 @@
-<h1><Olá!!</h1>
-<p>
-    Esse email vai listar os novos imóveis.
-    <ul>
-        {{#each properties}}
-        <li>{{id}}</li>
-        {{/each}}
-    </ul>
-</p>
+<html>
+    <head>
+        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h1>Olá!</h1>
+        <p>Encontrei novos aptos para alugar:
+            <ul>
+                {{#each properties}}
+                <li><a href="{{url}}" target="_blank">{{title}} - {{neighborhood}}</a></li>
+                {{/each}}
+            </ul>
+        </p>
+    </body>
+</html>

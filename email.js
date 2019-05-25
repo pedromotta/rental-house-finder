@@ -5,33 +5,31 @@ class Email {
         this.properties = properties
     }
 
-    async createTransporter() {
-        let testAccount = await nodemailer.createTestAccount();
+    createTransporter() {
         return nodemailer.createTransport({
-            host: "smtp.ethereal.email",
+            host: "smtp.office365.com",
             port: 587,
             secure: false,
             auth: {
-                user: testAccount.user,
-                pass: testAccount.pass
-            }
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASSWORD
+            },
+            tls: { ciphers: 'SSLv3' }
         });
     }
 
     async send() {
-        const transporter = await this.createTransporter();
+        const transporter = this.createTransporter();
 
         let info = await transporter.sendMail({
-            from: '"Fred Foo 👻" <foo@example.com>',
-            to: "bar@example.com, baz@example.com",
+            from: '"Buscador de apto" <pedromotta@outlook.com>',
+            to: "pedromotta13@gmail.com",
             subject: `${this.properties.length} novos imóveis`,
             text: 'Bora ver os novos aptos!!',
             html: this.properties.html()
         });
 
         console.log("Email enviado:", info.messageId);
-
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     }
 }
 

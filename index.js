@@ -21,7 +21,12 @@ async function start() {
     vivaReal.findAll()
         .then(properties => properties.news())
         .then(properties => properties.save())
-        .then(properties => new Email(properties).send())
+        .then(properties => {
+            if (properties.length) {
+                new Email(properties).send()
+            }
+        })
         .catch(console.error)
+        .then(() => console.log('FIM'))
         .then(process.exit)
 }

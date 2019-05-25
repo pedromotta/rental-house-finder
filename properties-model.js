@@ -11,7 +11,8 @@ let propertiesSchema = new mongoose.Schema({
         index: true
     },
     neighborhood: String,
-    url: String
+    url: String,
+    title: String
 });
 
 propertiesSchema.statics.findByIds = function (ids) {
