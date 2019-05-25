@@ -6,11 +6,11 @@ describe('Ids tests', () => {
         assert.isFunction(Ids)
     })
     it('removes duplicate ids', () => {
-        const ids = new Ids([1, 2, 2, 3, 4])
+        const ids = new Ids(['1', '2', '2 ', '3', '4'])
         const uniqueIds = ids.removeDuplicates()
 
         assert.instanceOf(uniqueIds, Ids)
-        assert.deepEqual(uniqueIds, new Ids([1, 2, 3, 4]))
+        assert.deepEqual(uniqueIds, new Ids(['1', '2', '3', '4']))
     })
     it('contains an existent item', () => {
         const ids = new Ids([1, 2, 2, 3, 4])

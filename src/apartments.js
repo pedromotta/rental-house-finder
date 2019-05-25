@@ -2,7 +2,7 @@ const Handlebars = require('handlebars')
 const fs = require('fs')
 const Apartment = require('./apartment')
 const Ids = require('./ids')
-const AptartmentsModel = require('./apartments-model')
+const AptartmentModel = require('./apartment-model')
 
 class Apartments {
     constructor(provider, apartments) {
@@ -30,7 +30,7 @@ class Apartments {
     }
 
     apartmentsWithIds(ids) {
-        return new Apartments(this.provider, this.apartments.filter(apto => ids.contains(apto.id)))
+        return new Apartments(this.provider, ids.ids.map(id => this.apartments.find(apto => apto.id === id)))
     }
 
     ids() {
@@ -38,7 +38,7 @@ class Apartments {
     }
 
     async news() {
-        const knownApartments = await AptartmentsModel.findByIds(this.ids().ids)
+        const knownApartments = await AptartmentModel.find({})
         const knownIds = Apartments.fromDb(this.provider, knownApartments).ids()
 
         console.log(knownApartments.length, 'imóveis conhecidos')
@@ -46,12 +46,12 @@ class Apartments {
         const newIds = this.ids().removeDuplicates().remove(knownIds)
 
         console.log(newIds.ids.length, 'imóveis para salvar')
-
         return this.apartmentsWithIds(newIds)
     }
 
     async save() {
-        const dbProperties = await AptartmentsModel.insertMany(this.apartments)
+        console.log('Salvando %i imóveis', this.ids().ids.length)
+        const dbProperties = await AptartmentModel.insertMany(this.apartments)
         console.log(dbProperties.length, 'novos imóveis salvos')
         return Apartments.fromDb(this.provider, dbProperties)
     }

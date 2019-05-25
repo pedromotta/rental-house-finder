@@ -2,7 +2,7 @@ const rp = require('request-promise-native')
 const Apartments = require('./apartments')
 
 const VIVA_REAL = 'VivaReal'
-const SIZE = 50
+const SIZE = 100
 
 class VivaReal {
     async requestApartments(page) {
@@ -47,7 +47,7 @@ class VivaReal {
             response = await this.requestApartments(page)
             apartments = apartments.append(Apartments.fromResponse(VIVA_REAL, response))
             page++
-        } while ((page * SIZE) < 20)
+        } while ((page * SIZE) < response.search.totalCount)
 
         console.log(apartments.length, 'imóveis encontrados em', VIVA_REAL)
         return apartments

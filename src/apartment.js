@@ -10,7 +10,7 @@ class Apartment {
     }
 
     static fromJson(provider, json) {
-        const id = json.listing.id
+        const id = json.listing.id.trim()
         const url = host.concat(json.url.link.href)
         const neighborhood = json.listing.address.neighborhood
         const title = json.listing.title

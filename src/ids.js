@@ -1,10 +1,10 @@
 class Ids {
     constructor(ids) {
-        this.ids = ids
+        this.ids = ids.map(id => typeof(id) === 'string' ? id.trim() : id)
     }
 
     removeDuplicates() {
-        return new Ids(this.ids.filter((id, index) => this.ids.indexOf(id) === index))
+        return new Ids([...new Set(this.ids)])
     }
 
     contains(id) {
