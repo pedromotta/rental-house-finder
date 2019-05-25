@@ -1,6 +1,6 @@
 const host = 'https://www.vivareal.com.br'
 
-class Property {
+class Apartment {
     constructor(provider, id, url, neighborhood, title) {
         this.provider = provider
         this.id = id
@@ -14,12 +14,12 @@ class Property {
         const url = host.concat(json.url.link.href)
         const neighborhood = json.listing.address.neighborhood
         const title = json.listing.title
-        return new Property(provider, id, url, neighborhood, title)
+        return new Apartment(provider, id, url, neighborhood, title)
     }
 
     static fromDb(provider, model) {
-        return new Property(provider, model.id, model.url, model.neighborhood, model.title)
+        return new Apartment(provider, model.id, model.url, model.neighborhood, model.title)
     }
 }
 
-module.exports = Property
+module.exports = Apartment

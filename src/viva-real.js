@@ -1,11 +1,11 @@
 const rp = require('request-promise-native')
-const Properties = require('./properties')
+const Apartments = require('./apartments')
 
-const PROVIDER = 'VivaReal'
+const VIVA_REAL = 'VivaReal'
 const SIZE = 50
 
 class VivaReal {
-    async findProperties(page) {
+    async requestApartments(page) {
         const options = {
             uri: 'https://glue-api.vivareal.com/v1/listings',
             qs: {
@@ -40,17 +40,17 @@ class VivaReal {
     async findAll() {
         let page = 0
         let response
-        let properties = Properties.empty(PROVIDER)
+        let apartments = Apartments.empty(VIVA_REAL)
 
         do {
             console.debug('Buscando página', page, '...')
-            response = await this.findProperties(page)
-            properties = properties.append(Properties.fromResponse(PROVIDER, response))
+            response = await this.requestApartments(page)
+            apartments = apartments.append(Apartments.fromResponse(VIVA_REAL, response))
             page++
         } while ((page * SIZE) < response.search.totalCount)
 
-        console.log(properties.length, 'imóveis encontrados em', PROVIDER)
-        return properties
+        console.log(apartments.length, 'imóveis encontrados em', VIVA_REAL)
+        return apartments
     }
 }
 

@@ -2,9 +2,11 @@
   "name": "rental-house-finder",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "test": "mocha",
+    "coverage": "nyc --reporter=lcov --reporter=text-summary npm run test"
   },
   "author": "Pedro Motta",
   "license": "ISC",
@@ -13,7 +15,12 @@
     "handlebars": "^4.1.2",
     "mongoose": "^5.5.11",
     "nodemailer": "^6.2.1",
+    "nyc": "^14.1.1",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4"
   }
 }

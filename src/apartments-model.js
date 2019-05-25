@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-let propertiesSchema = new mongoose.Schema({
+let apartmentsSchema = new mongoose.Schema({
     provider: {
         type: String,
         enum: ["VivaReal"]
@@ -13,9 +13,9 @@ let propertiesSchema = new mongoose.Schema({
     neighborhood: String,
     url: String,
     title: String
-});
+})
 
-propertiesSchema.statics.findByIds = function (ids) {
+apartmentsSchema.statics.findByIds = function (ids) {
     return this.find({
         id: {
             $in: ids
@@ -23,4 +23,4 @@ propertiesSchema.statics.findByIds = function (ids) {
     })
 }
 
-module.exports = mongoose.model('Properties', propertiesSchema)
+module.exports = mongoose.model('Apartments', apartmentsSchema)
