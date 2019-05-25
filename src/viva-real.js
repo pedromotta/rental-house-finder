@@ -47,7 +47,7 @@ class VivaReal {
             response = await this.requestApartments(page)
             apartments = apartments.append(Apartments.fromResponse(VIVA_REAL, response))
             page++
-        } while ((page * SIZE) < response.search.totalCount)
+        } while ((page * SIZE) < 20)
 
         console.log(apartments.length, 'imóveis encontrados em', VIVA_REAL)
         return apartments

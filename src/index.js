@@ -19,11 +19,13 @@ db.once('open', async function () {
 async function start() {
     const vivaReal = new VivaReal()
     vivaReal.findAll()
-        .then(properties => properties.news())
-        .then(properties => properties.save())
-        .then(properties => {
-            if (properties.length) {
-                new Email(properties).send()
+        .then(apartments => apartments.news())
+        .then(apartments => apartments.save())
+        .then(apartments => {
+            console.log(apartments.length)
+            if (apartments.length) {
+                console.log('Enviar email')
+                return new Email(apartments).send()
             }
         })
         .catch(console.error)

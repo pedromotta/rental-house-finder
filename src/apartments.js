@@ -16,32 +16,38 @@ class Apartments {
     }
 
     static fromResponse(provider, json) {
-        const properties = json.search.result.listings.map(listing => Apartment.fromJson(this.provider, listing))
-        return new Apartments(provider, properties)
+        const apartments = json.search.result.listings.map(listing => Apartment.fromJson(provider, listing))
+        return new Apartments(provider, apartments)
     }
 
-    static fromDb(provider, models) {
-        const properties = models.map(model => Apartment.fromDb(provider, model))
-        return new Apartments(provider, properties)
+    static fromDb(provider, apartmentModels) {
+        const apartmens = apartmentModels.map(model => Apartment.fromDb(provider, model))
+        return new Apartments(provider, apartmens)
+    }
+
+    apartmentWithId(id) {
+        return this.apartments.find(apto => apto.id === id)
+    }
+
+    apartmentsWithIds(ids) {
+        return new Apartments(this.provider, this.apartments.filter(apto => ids.contains(apto.id)))
+    }
+
+    ids() {
+        return new Ids(this.apartments.map(apto => apto.id))
     }
 
     async news() {
-        const ids = new Ids(this.apartments.map(p => p.id))
-
-        const knownApartments = await AptartmentsModel.findByIds(ids)
+        const knownApartments = await AptartmentsModel.findByIds(this.ids().ids)
+        const knownIds = Apartments.fromDb(this.provider, knownApartments).ids()
 
         console.log(knownApartments.length, 'imóveis conhecidos')
 
-        ids.removeDuplicates().
-        const newProperties = ids.filter(function (id, index) {
-            return ids.indexOf(id) === index;
-        }).filter(id => {
-            return !knownApartments.find(property => id === property.id)
-        }).map(newId => this.apartments.find(p => p.id === newId))
+        const newIds = this.ids().removeDuplicates().remove(knownIds)
 
-        console.log(newProperties.length, 'imóveis para salvar')
+        console.log(newIds.ids.length, 'imóveis para salvar')
 
-        return new Apartments(this.provider, newProperties)
+        return this.apartmentsWithIds(newIds)
     }
 
     async save() {
@@ -51,15 +57,15 @@ class Apartments {
     }
 
     html() {
-        const html = fs.readFileSync('template-email.html', 'utf-8')
+        const html = fs.readFileSync('resources/template-email.html', 'utf-8')
         const template = Handlebars.compile(html)
         return template({
             properties: this.apartments
         })
     }
 
-    append(properties) {
-        const joinedProperties = this.apartments.concat(properties.properties)
+    append(apartments) {
+        const joinedProperties = this.apartments.concat(apartments.apartments)
         return new Apartments(this.provider, joinedProperties)
     }
 }

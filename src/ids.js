@@ -4,8 +4,15 @@ class Ids {
     }
 
     removeDuplicates() {
-        const uniqueIds = this.ids.filter((id, index) => this.ids.indexOf(id) === index)
-        return new Ids(uniqueIds)
+        return new Ids(this.ids.filter((id, index) => this.ids.indexOf(id) === index))
+    }
+
+    contains(id) {
+        return this.ids.includes(id)
+    }
+
+    remove(sourceIds) {
+        return new Ids(this.ids.filter(id => !sourceIds.contains(id)))
     }
 }
 
