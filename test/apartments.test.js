@@ -1,8 +1,11 @@
+const proxyquire = require('proxyquire')
 const assert = require('chai').assert
 const fs = require('fs')
 const Apartment = require('../src/apartment')
 const Ids = require('../src/ids')
-const Apartments = require('../src/apartments')
+const ApartmentModel = require('../src/apartment-model')
+const apartmentModelMock = {}
+const Apartments = proxyquire('../src/apartments', { '../src/apartment-model': apartmentModelMock })
 
 describe('Apartments tests', () => {
     const apartment1 = new Apartment('Test', '1', 'https://www.vivareal.com.br/1', 'Sagrada Família', 'Apartamento novo')
@@ -48,5 +51,16 @@ describe('Apartments tests', () => {
         const apartments = new Apartments('TestVivaReal', [apartment1, apartment2])
 
         assert.equal(apartments.html(), html)
+    })
+    it('returns only the apartment that there is not in the db', async () => {
+        apartmentModelMock.find = () => { return [new ApartmentModel(apartment1), new ApartmentModel(apartment2), new ApartmentModel(apartment3)] }
+
+        const apartment4 = new Apartment('', '4', '', '', '')
+        const apartment5 = new Apartment('', '5', '', '', '')
+        const allApartments = new Apartments('TestVivaReal', [apartment1, apartment2, apartment3, apartment4, apartment5])
+
+        const onlyNewApartments = await allApartments.news()
+
+        assert.deepEqual(onlyNewApartments, new Apartments('TestVivaReal', [apartment4, apartment5]))
     })
 })

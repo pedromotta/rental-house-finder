@@ -45,7 +45,7 @@ class Apartments {
 
         const newIds = this.ids().removeDuplicates().remove(knownIds)
 
-        console.log(newIds.ids.length, 'imóveis para salvar')
+        console.log(newIds.ids.length, 'novos imóveis')
         return this.apartmentsWithIds(newIds)
     }
 
