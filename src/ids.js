@@ -1,6 +1,6 @@
 class Ids {
     constructor(ids) {
-        this.ids = ids.map(id => typeof(id) === 'string' ? id.trim() : id)
+        this.ids = ids.map(id => typeof (id) === 'string' ? id.trim() : id)
     }
 
     removeDuplicates() {

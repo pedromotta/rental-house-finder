@@ -15,12 +15,4 @@ let apartmentsSchema = new mongoose.Schema({
     title: String
 })
 
-apartmentsSchema.statics.findByIds = function (ids) {
-    return this.find({
-        id: {
-            $in: ids
-        }
-    })
-}
-
 module.exports = mongoose.model('Apartments', apartmentsSchema)
