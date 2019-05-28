@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer')
 
 class Email {
     constructor(properties) {
@@ -7,7 +7,7 @@ class Email {
 
     createTransporter() {
         return nodemailer.createTransport({
-            host: "smtp.office365.com",
+            host: 'smtp.office365.com',
             port: 587,
             secure: false,
             auth: {
@@ -23,13 +23,13 @@ class Email {
 
         let info = await transporter.sendMail({
             from: '"Buscador de apto" <pedromotta@outlook.com>',
-            to: "pedromotta13@gmail.com",
+            to: 'pedromotta13@gmail.com, larissadpas25@gmail.com',
             subject: `${this.properties.length} novos imóveis`,
             text: 'Bora ver os novos aptos!!',
             html: this.properties.html()
         });
 
-        console.log("Email enviado:", info.messageId);
+        console.log('Email enviado:', info.messageId);
     }
 }
 
