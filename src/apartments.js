@@ -1,5 +1,6 @@
 const Handlebars = require('handlebars')
 const fs = require('fs')
+const VivaRealMapper = require('./viva-real-mapper')
 const Apartment = require('./apartment')
 const Ids = require('./ids')
 const AptartmentModel = require('./apartment-model')
@@ -16,12 +17,12 @@ class Apartments {
     }
 
     static fromResponse(provider, json) {
-        const apartments = json.search.result.listings.map(listing => Apartment.fromJson(provider, listing))
+        const apartments = json.search.result.listings.map(listing => VivaRealMapper.fromJson(listing))
         return new Apartments(provider, apartments)
     }
 
     static fromDb(provider, apartmentModels) {
-        const apartmens = apartmentModels.map(model => Apartment.fromDb(provider, model))
+        const apartmens = apartmentModels.map(model => VivaRealMapper.fromModel(model))
         return new Apartments(provider, apartmens)
     }
 
