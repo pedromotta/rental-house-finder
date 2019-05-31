@@ -4,7 +4,7 @@ const Apartment = require('../src/apartment')
 const ApartmentModel = require('../src/apartment-model')
 const VivaRealMapper = require('../src/viva-real-mapper.js')
 
-describe.only('Viva Real Mapper tests', () => {
+describe('Viva Real Mapper tests', () => {
     it('exports VivaRealMapper class', () => {
         assert.isFunction(VivaRealMapper)
     })
