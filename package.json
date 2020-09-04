@@ -13,7 +13,7 @@
   "dependencies": {
     "crawler": "^1.2.1",
     "dotenv": "^8.0.0",
-    "handlebars": "^4.1.2",
+    "handlebars": "^4.5.3",
     "mongoose": "^5.5.11",
     "nodemailer": "^6.2.1",
     "nyc": "^14.1.1",
